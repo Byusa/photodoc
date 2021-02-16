@@ -10,6 +10,25 @@
 import App from "./app/app.tsx"
 import { AppRegistry } from "react-native"
 
+import firebase from "firebase/app"
+import "firebase/auth"
+import "firebase/firestore"
+import "firebase/storage"
+
+const config = {
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  apiKey: "AIzaSyD0SWN-h4CvElFIXpdXjxxqed_kdw0ez2g",
+  authDomain: "photodocumentation-cf82e.firebaseapp.com",
+  databaseURL: "https://photodocumentation-cf82e-default-rtdb.firebaseio.com",
+  projectId: "photodocumentation-cf82e",
+  storageBucket: "photodocumentation-cf82e.appspot.com",
+  messagingSenderId: "1035861943070",
+  appId: "1:1035861943070:web:944c1485cb3c651885df0f",
+  measurementId: "G-21F20F44DQ",
+}
+
+firebase.initializeApp(config) //Initilazing our authenticaltion
+
 /**
  * This needs to match what's found in your app_delegate.m and MainActivity.java.
  */

@@ -15,6 +15,9 @@ import React, { useState, useEffect, useRef } from "react"
 import { NavigationContainerRef } from "@react-navigation/native"
 import { SafeAreaProvider, initialWindowSafeAreaInsets } from "react-native-safe-area-context"
 import * as storage from "./utils/storage"
+
+import { LogBox } from "react-native"
+
 import {
   useBackButtonHandler,
   RootNavigator,
@@ -52,6 +55,8 @@ function App() {
       setupRootStore().then(setRootStore)
     })()
   }, [])
+  LogBox.ignoreAllLogs()
+  LogBox.ignoreLogs(["Require cycle"])
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
