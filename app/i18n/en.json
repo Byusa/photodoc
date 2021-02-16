@@ -23,5 +23,32 @@
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
+  },
+  "registerScreen": {
+    "register": "REGISTER",
+    "tagLine1": "By clicking this you agree to our term and conditions and to our privacy rules",
+    "login": "Login?"
+  },
+  "loginScreen": {
+    "login": "LOGIN",
+    "register": "REGISTER?"
+  },
+  "home": {
+    "home": "Home"
+  },
+  "labelImage": {
+    "title": "Food Labeling",
+    "foodName": "Food Name",
+    "foodNamePlaceHolder": "Enter Food Name",
+    "alternateFoodName": "Alternate Food Name",
+    "alternateFoodNamePlaceHolder": "Enter Alternate Food Name",
+    "ingredients": "Ingredients",
+    "ingredientsPlaceHolder": " Enter Ingredients",
+    "nutrients": "Nutrients",
+    "nutrientsPlaceHolder": "Enter Nutrients",
+    "saveButton": "Save"
+  },
+  "gallery": {
+    "title": "Gallery"
   }
 }
