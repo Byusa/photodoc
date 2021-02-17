@@ -313,8 +313,8 @@ export const HomeScreen = observer(function HomeScreen(imageStore) {
       </View>
 
       <View style={{ flex: 0.5 }}>
-        {/* <View style={{ flex: 0.7, borderRadius: 10, borderWidth: 4, borderColor: "#C3C3C3" }}>
-          <HorizontalBarGraph
+        <View style={{ flex: 0.7, borderRadius: 10, borderWidth: 4, borderColor: "#C3C3C3" }}>
+          {/* <HorizontalBarGraph
             data={[50, 70, 80, 20, 90, 100]}
             labels={["Rice", "Chicken", "Maize", "Curry", "Steak", "Rolls"]}
             width={width - 10}
@@ -338,8 +338,8 @@ export const HomeScreen = observer(function HomeScreen(imageStore) {
 
               //borderRadius: 4
             }}
-          />
-        </View> */}
+          /> */}
+        </View>
         <View style={{ flex: 0.3, zIndex: 1 }}>
           <FlatList
             data={nutrients}

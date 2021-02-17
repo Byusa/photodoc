@@ -14,7 +14,7 @@ import {
   Logining,
   HomeScreen,
   LoadingScreen,
-  //LabelImage,
+  LabelImage,
   //GalleryScreen
 } from "../screens"
 
@@ -48,7 +48,7 @@ const authRoutes = [
 
 const appRoutes = [
   { name: "home", component: HomeScreen },
-  // { name: "labelImage", component: LabelImage },
+  { name: "labelImage", component: LabelImage },
   // { name: "gallery", component: GalleryScreen }
 ]
 
