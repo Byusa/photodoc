@@ -28,12 +28,12 @@ import firebase from "firebase/app"
 const { width, height } = Dimensions.get("window")
 
 const images = [
-  // require("../../../assets/images/steak.jpg"),
-  // require("../../../assets/images/curry.jpg"),
-  // require("../../../assets/images/maize.jpg"),
-  // require("../../../assets/images/rolls.jpg"),
-  // require("../../../assets/images/curry.jpg"),
-  // require("../../../assets/images/maize.jpg"),
+  require("../../../assets/images/steak.jpg"),
+  require("../../../assets/images/curry.jpg"),
+  require("../../../assets/images/maize.jpg"),
+  require("../../../assets/images/rolls.jpg"),
+  require("../../../assets/images/curry.jpg"),
+  require("../../../assets/images/maize.jpg"),
 ]
 
 const nutrients = [
@@ -297,6 +297,7 @@ export const HomeScreen = observer(function HomeScreen(imageStore) {
           data={[0, 1, 2, 3, 4, 5]}
           horizontal
           renderItem={({ item }) => {
+            console.log(images[item])
             return (
               <View style={{ alignSelf: "center", padding: 5 }}>
                 <Image
