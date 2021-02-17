@@ -1,11 +1,14 @@
 import React from "react"
-import { View, ViewStyle, TextStyle } from "react-native"
+import { View, ViewStyle, TextStyle, Dimensions } from "react-native"
 import { HeaderProps } from "./header.props"
 import { Button } from "../button/button"
 import { Text } from "../text/text"
 import { Icon } from "../icon/icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
+import VectorIcon from "react-native-vector-icons/FontAwesome5"
+
+const { height } = Dimensions.get("window")
 
 // static styles
 const ROOT: ViewStyle = {
@@ -15,6 +18,7 @@ const ROOT: ViewStyle = {
   paddingTop: spacing[5],
   paddingBottom: spacing[5],
   justifyContent: "flex-start",
+  // backgroundColor: "#ED3833"
 }
 const TITLE: TextStyle = { textAlign: "center" }
 const TITLE_MIDDLE: ViewStyle = { flex: 1, justifyContent: "center" }
@@ -32,6 +36,9 @@ export function Header(props: HeaderProps) {
     leftIcon,
     headerText,
     headerTx,
+    useVectorIcons,
+    rightIconName,
+    leftIconName,
     style,
     titleStyle,
   } = props
@@ -39,9 +46,13 @@ export function Header(props: HeaderProps) {
 
   return (
     <View style={{ ...ROOT, ...style }}>
-      {leftIcon ? (
+      {leftIcon || useVectorIcons ? (
         <Button preset="link" onPress={onLeftPress}>
-          <Icon icon={leftIcon} />
+          {useVectorIcons ? (
+            <VectorIcon name={leftIconName} size={30} color={"#fff"} />
+          ) : (
+            <Icon icon={leftIcon} />
+          )}
         </Button>
       ) : (
         <View style={LEFT} />
@@ -49,9 +60,13 @@ export function Header(props: HeaderProps) {
       <View style={TITLE_MIDDLE}>
         <Text style={{ ...TITLE, ...titleStyle }} text={header} />
       </View>
-      {rightIcon ? (
+      {rightIcon || useVectorIcons ? (
         <Button preset="link" onPress={onRightPress}>
-          <Icon icon={rightIcon} />
+          {useVectorIcons ? (
+            <VectorIcon name={rightIconName} size={30} color={"#fff"} />
+          ) : (
+            <Icon icon={rightIcon} />
+          )}
         </Button>
       ) : (
         <View style={RIGHT} />

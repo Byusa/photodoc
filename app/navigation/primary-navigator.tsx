@@ -12,7 +12,7 @@ import firebase from "firebase/app"
 import {
   Registering,
   Logining,
-  //HomeScreen,
+  HomeScreen,
   LoadingScreen,
   //LabelImage,
   //GalleryScreen
@@ -47,7 +47,7 @@ const authRoutes = [
 ]
 
 const appRoutes = [
-  // { name: "home", component: HomeScreen },
+  { name: "home", component: HomeScreen },
   // { name: "labelImage", component: LabelImage },
   // { name: "gallery", component: GalleryScreen }
 ]
