@@ -289,16 +289,17 @@ const LabelImageScreen = observer(function LabelImageScreen() {
 
   useEffect(() => {
     let response = navState[1].params
-    // console.log("rerrrrrrrrrrrrrr", response);
     console.log("response.img.uri =  ", response.img.uri)
     console.log("response.img.fileName =  ", response.img.fileName)
+    setImage(response.img.uri)
+    setFile(response.img)
+    //////
+    // console.log("rerrrrrrrrrrrrrr", response);
     // console.log("/////////////types////////");
     // console.log("type response =   ", typeof response)
     // console.log("type response.img.uri =  ", typeof response.img.uri)
     // console.log("type response.img.fileName =  ", typeof response.img)
     // console.log("/////////////types////////");
-    setImage(response.img.uri)
-    setFile(response.img)
   })
 
   const back = () => {

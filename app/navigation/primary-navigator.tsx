@@ -15,7 +15,7 @@ import {
   HomeScreen,
   LoadingScreen,
   LabelImage,
-  //GalleryScreen
+  GalleryScreen,
 } from "../screens"
 
 /**
@@ -49,7 +49,7 @@ const authRoutes = [
 const appRoutes = [
   { name: "home", component: HomeScreen },
   { name: "labelImage", component: LabelImage },
-  // { name: "gallery", component: GalleryScreen }
+  { name: "gallery", component: GalleryScreen },
 ]
 
 export function PrimaryNavigator() {
