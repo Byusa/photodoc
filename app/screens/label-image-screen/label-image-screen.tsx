@@ -15,6 +15,7 @@ import { resolveConfig } from "prettier"
 import { reject } from "ramda"
 
 import ImagePicker from "react-native-image-picker"
+import { snapshot } from "@storybook/addon-storyshots"
 //import RNFetchBlob from "react-native-fetch-blob"
 
 //const block = RNFetchBlob.polyfill.Blob
@@ -92,49 +93,125 @@ const LabelImageScreen = observer(function LabelImageScreen() {
 
   const navigation = useNavigation()
 
-  // const addFood = (food, addComplete) =>{
-  //   const val =  firebase.firestore.FieldValue.serverTimestamp
-  // }
-
   const uploadImage = async () => {
     //Save image to storage
+    const foodInfo = "food" + "/" + foodName + "/" + file.fileName
     const response = await fetch(image)
     const blob = await response.blob()
-    var ref = firebase
-      .storage()
-      .ref()
-      .child("food" + "/" + foodName + "/" + file.fileName)
-    ref.put(blob)
+    var ref = firebase.storage().ref().child(foodInfo)
 
-    console.log("XXXXXX", ref)
+    await ref
+      .put(blob)
+      .then(function () {
+        console.log("dddddddddddd image successfully written!")
+      })
+      .catch(function (error) {
+        console.error("eeeeeeeeeeeeeee Error writing image: ", error)
+      })
+
+    //console.log("XXXXXX", ref)
     const picturePath = ref._delegate._location.path_
 
     console.log("---------------------")
-    console.log("---------------------")
-    console.log("---------------------")
-    console.log("---------------------")
-    console.log("YYYYYY", picturePath)
+    //console.log("YYYYYY", picturePath)
 
     const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
 
-    firebase
+    var docRef = firebase.firestore().collection("food").doc(foodName)
+
+    // docRef
+    //   .get()
+    //   .then((doc) => {
+    //     if (doc.exists) {
+    //       console.log("Document data -------------------->:", doc.data())
+    //     } else {
+    //       // doc.data() will be undefined in this case
+    //       console.log("No such document! --------------------> ")
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error getting document:", error)
+    //   })
+
+    //////
+    // await firebase
+    //   .firestore()
+    //   .collection("food")
+    //   .doc(foodName)
+    //   .update({
+    //     foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
+    //       //name: file.name,
+    //       // name: foodName,
+    //       //url: await ref.getDownloadURL(),
+    //       picturePath: picturePath,
+    //     }),
+    //   })
+    //   .then(function () {
+    //     console.log("dddddddddddd Document successfully written!")
+    //   })
+    //   .catch(function (error) {
+    //     console.error("eeeeeeeeeeeeeee Error writing document: ", error)
+    //   })
+    ////////
+
+    //////////
+
+    // await firebase
+    //   .firestore()
+    //   .collection("food")
+    //   .doc("banana")
+    //   .update({
+    //     array: firebase.firestore.FieldValue.arrayUnion({
+    //       userId: Userid,
+    //       picturePath: picturePath,
+    //     }),
+    //   })
+    //   .then(function () {
+    //     console.log("dddddddddddd Document1 successfully written!")
+    //   })
+    //   .catch(function (error) {
+    //     console.error("eeeeeeeeeeeeeee Error1 writing document: ", error)
+    //   })
+
+    // console.log("---------------------")
+    // console.log("Banana writen")
+    // console.log("---------------------")
+
+    await firebase
       .firestore()
       .collection("food")
       .doc(foodName.toLowerCase())
-      .set({
-        id: Userid,
-        Food_Name: foodName.toLowerCase(),
-        Alternate_Food_Name: alternateFoodName,
-        Ingredients: ingredients,
-        Nutrients: nutrients,
-        imageURL: image,
+      .update({
+        foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
+          userId: Userid,
+          picturePath: picturePath,
+        }),
       })
       .then(function () {
-        console.log("dddddddddddd Document successfully written!")
+        console.log("dddddddddddd Document2 successfully written!")
       })
       .catch(function (error) {
-        console.error("eeeeeeeeeeeeeee Error writing document: ", error)
+        console.error("eeeeeeeeeeeeeee Error2 writing document: ", error)
       })
+    console.log("---------------------")
+
+    ///////
+
+    // firebase
+    //   .firestore()
+    //   .collection("food")
+    //   .doc(foodName)
+    //   .update({
+    //     array: firebase.firestore.FieldValue.arrayUnion, //("oniion1"),
+    //   })
+    //   .then(function () {
+    //     console.log("dddddddddddd Document successfully written!")
+    //   })
+    //   .catch(function (error) {
+    //     console.error("eeeeeeeeeeeeeee Error writing document: ", error)
+    //   })
+
+    console.log("end")
 
     // {"_delegate":
     //   {
