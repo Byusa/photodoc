@@ -15,6 +15,7 @@ import { resolveConfig } from "prettier"
 import { reject } from "ramda"
 
 import ImagePicker from "react-native-image-picker"
+import { snapshot } from "@storybook/addon-storyshots"
 //import RNFetchBlob from "react-native-fetch-blob"
 
 //const block = RNFetchBlob.polyfill.Blob
@@ -92,197 +93,63 @@ const LabelImageScreen = observer(function LabelImageScreen() {
 
   const navigation = useNavigation()
 
-  // const rnfs = require("react-native-fs")
-  //const fs = require('fs');
-
-  const saveImage = async () => {
-    const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
-
-    const id = firebase.firestore().collection("food").doc().id
-    //firefirestore.collection('Food').doc().id
-
-    // var storageRef = firebase.storage.ref()
-
-    // var foodRef = storageRef.child(foodName)
-
-    // var foodImagesRef = storageRef.child()
-
-    // fileRef.put(foodName)
-
-    // console.log("User id", Userid)
-    // console.log("Food id", id)
-
-    // const storageRef = firebase.storage().ref()
-    // const fileRef = storageRef.child(file.fileName)
-    // await fileRef.put(file)
-    // firebase.firestore().collection("food").doc(id).update({
-    //     image: firebase.firestore.FieldValue.arrayUnion({
-    //         name: file.name,
-    //         url: await fileRef.getDownloadURL()
-    //     })
-    // })
-    //////////////////////////////////////////////
-
-    const storageRef = firebase.storage().ref()
-    //const forestRef = storageRef.child(file.fileName)
-    //image uri
-    const imageURI = file.uri
-    console.log("imageURI = " + imageURI)
-    //image type
-    const imageType = file.type
-    console.log("imageType = " + imageType)
-    // Image Blob
-    // const blob = new Blob([imageURI], { type: `${imageType}` });
-    // console.log('Adding Blob');
-    // console.log(blob.data);
-
-    const filePathRef = storageRef.child(foodName + "/" + file.fileName)
-    console.log("file path = " + filePathRef)
-
-    const metadata = {
-      contentType: `${imageType}`,
-    }
-    console.log(" metadata = " + metadata)
-
-    //await filePathRef.put(file, metadata)
-
-    firebase
-      .firestore()
-      .collection("food")
-      .doc(foodName)
-      .update({
-        image: firebase.firestore.FieldValue.arrayUnion({
-          name: file.fileName,
-          url: await filePathRef.getDownloadURL(),
-        }),
-      })
-    /////
-
-    // Upload the file and metadata
-    //storageRef.child(filePathRef).put(file, metadata);
-
-    // // const id = colRef.doc().id and colRef.doc(id).update() can be replaced with just colRef.add() (colRef being a CollectionReference)
-
-    // firebase.firestore().collection("food").doc(id).update({
-    //   image: firebase.firestore.FieldValue.arrayUnion({
-    //     name: capture.fileName,
-    //     url: await fileRef.getDownloadURL()
-    //   })
-    // });
-
-    //////////////////////////////////////////////
-
-    // var ref = firebase.storage().ref().child(foodName + image);
-    // ref.put(image)
-    // const storageRef = firebase.storage().ref()
-    // const fileRef = storageRef.child(foodName + image) //name of it
-    // fileRef.put(image) //store image
-
-    //check if the foodName is not there yet
-
-    // if (!foodName) {
-    //   return
-    // }
-
-    // firebase.firestore().collection("food").doc(foodName.toLowerCase()).set({
-    //   id: Userid,
-    //   Food_Name: foodName.toLowerCase(),
-    //   Alternate_Food_Name: alternateFoodName,
-    //   Ingredients: ingredients,
-    //   Nutrients: nutrients,
-    //   imageURL: image
-    // })
-    //   .then(function () {
-    //     console.log("dddddddddddd Document successfully written!");
-    //   }).catch(function (error) {
-    //     console.error("eeeeeeeeeeeeeee Error writing document: ", error);
-    //   });
-
-    //console.log("Result", res);
-    LogBox.ignoreLogs(["Setting a timer"])
-    console.log("ppppppppppppp")
-    navigation.navigate("home")
-  }
-
   const uploadImage = async () => {
+    const db = firebase.firestore()
     //Save image to storage
+    const foodInfo = "food" + "/" + foodName + "/" + file.fileName
     const response = await fetch(image)
     const blob = await response.blob()
-    var ref = firebase
-      .storage()
-      .ref()
-      .child("food" + "/" + foodName + "/" + file.fileName)
-    ref.put(blob)
+    var ref = firebase.storage().ref().child(foodInfo)
 
-    //create a folder named to keep images
+    await ref
+      .put(blob)
+      .then(function () {
+        console.log("dddddddddddd image successfully written!")
+      })
+      .catch(function (error) {
+        console.error("eeeeeeeeeeeeeee Error writing image: ", error)
+      })
+
+    const picturePath = ref._delegate._location.path_
+
+    console.log("---------------------")
+    //console.log("YYYYYY", picturePath)
+
     const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
-    //const id = firebase.firestore().collection("food").doc().id
-    //check if the foodName already exist
-    firebase
+
+    var docRef = firebase.firestore().collection("food").doc(foodName.toLowerCase())
+
+    //Save document to firestore
+    await firebase
       .firestore()
       .collection("food")
       .doc(foodName.toLowerCase())
-      .set({
-        id: Userid,
-        Food_Name: foodName.toLowerCase(),
-        Alternate_Food_Name: alternateFoodName,
-        Ingredients: ingredients,
-        Nutrients: nutrients,
-        imageURL: image,
-      })
+      .set(
+        {
+          id: Userid,
+          Food_Name: foodName.toLowerCase(),
+          Alternate_Food_Name: alternateFoodName,
+          Ingredients: ingredients,
+          Nutrients: nutrients,
+          foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
+            userId: Userid,
+            picturePath: picturePath,
+          }),
+        },
+        { merge: true },
+      )
       .then(function () {
-        console.log("dddddddddddd Document successfully written!")
+        console.log("dddddddddddd Food Name successfully written!")
       })
       .catch(function (error) {
-        console.error("eeeeeeeeeeeeeee Error writing document: ", error)
+        console.error("eeeeeeeeeeeeeee Error3 writing Food Name: ", error)
       })
 
-    //keep images
-    firebase
-      .firestore()
-      .collection("food")
-      .doc(foodName)
-      .update({
-        image: firebase.firestore.FieldValue.arrayUnion({
-          name: file.name,
-          url: await ref.getDownloadURL(),
-        }),
-      })
+    console.log("end")
 
     LogBox.ignoreLogs(["Setting a timer"])
     console.log("ppppppppppppp")
     navigation.navigate("home")
-  }
-  const uploadImage1 = () => {
-    // console.log("inside the method")
-    // const uri = image;
-    // const mime = 'application/octet-stream';
-    // const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
-    // const sessionId = new Date().getTime()
-    // let uploadBlob = null
-    // const imageRef = firebase.storage().ref(foodName).child(file.fileName)
-    // console.log("after the info")
-    // fs.readFile(uploadUri, 'base64')
-    //   .then((data) => {
-    //     console.log("success 1")
-    //     Blob.build(data, { type: `${mime};BASE64` })
-    //   })
-    //   .then((blob) => {
-    //     console.log(" Good")
-    //     uploadBlob = blob
-    //     imageRef.put(blob, { contentType: mime })
-    //   })
-    //   .then(() => {
-    //     uploadBlob.close()
-    //     imageRef.getDownloadURL()
-    //   })
-    //   .then((url) => {
-    //     resolve(url)
-    //     storeReference(url, sessionId)
-    //   })
-    //   .catch((error) => {
-    //     reject(error)
-    //   })
   }
 
   const navState = useNavigationState((state) => state.routes)
