@@ -94,6 +94,7 @@ const LabelImageScreen = observer(function LabelImageScreen() {
   const navigation = useNavigation()
 
   const uploadImage = async () => {
+    const db = firebase.firestore()
     //Save image to storage
     const foodInfo = "food" + "/" + foodName + "/" + file.fileName
     const response = await fetch(image)
@@ -109,7 +110,6 @@ const LabelImageScreen = observer(function LabelImageScreen() {
         console.error("eeeeeeeeeeeeeee Error writing image: ", error)
       })
 
-    //console.log("XXXXXX", ref)
     const picturePath = ref._delegate._location.path_
 
     console.log("---------------------")
@@ -117,156 +117,35 @@ const LabelImageScreen = observer(function LabelImageScreen() {
 
     const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
 
-    var docRef = firebase.firestore().collection("food").doc(foodName)
+    var docRef = firebase.firestore().collection("food").doc(foodName.toLowerCase())
 
-    // docRef
-    //   .get()
-    //   .then((doc) => {
-    //     if (doc.exists) {
-    //       console.log("Document data -------------------->:", doc.data())
-    //     } else {
-    //       // doc.data() will be undefined in this case
-    //       console.log("No such document! --------------------> ")
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error getting document:", error)
-    //   })
-
-    //////
-    // await firebase
-    //   .firestore()
-    //   .collection("food")
-    //   .doc(foodName)
-    //   .update({
-    //     foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
-    //       //name: file.name,
-    //       // name: foodName,
-    //       //url: await ref.getDownloadURL(),
-    //       picturePath: picturePath,
-    //     }),
-    //   })
-    //   .then(function () {
-    //     console.log("dddddddddddd Document successfully written!")
-    //   })
-    //   .catch(function (error) {
-    //     console.error("eeeeeeeeeeeeeee Error writing document: ", error)
-    //   })
-    ////////
-
-    //////////
-
-    // await firebase
-    //   .firestore()
-    //   .collection("food")
-    //   .doc("banana")
-    //   .update({
-    //     array: firebase.firestore.FieldValue.arrayUnion({
-    //       userId: Userid,
-    //       picturePath: picturePath,
-    //     }),
-    //   })
-    //   .then(function () {
-    //     console.log("dddddddddddd Document1 successfully written!")
-    //   })
-    //   .catch(function (error) {
-    //     console.error("eeeeeeeeeeeeeee Error1 writing document: ", error)
-    //   })
-
-    // console.log("---------------------")
-    // console.log("Banana writen")
-    // console.log("---------------------")
-
+    //Save document to firestore
     await firebase
       .firestore()
       .collection("food")
       .doc(foodName.toLowerCase())
-      .update({
-        foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
-          userId: Userid,
-          picturePath: picturePath,
-        }),
-      })
+      .set(
+        {
+          id: Userid,
+          Food_Name: foodName.toLowerCase(),
+          Alternate_Food_Name: alternateFoodName,
+          Ingredients: ingredients,
+          Nutrients: nutrients,
+          foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
+            userId: Userid,
+            picturePath: picturePath,
+          }),
+        },
+        { merge: true },
+      )
       .then(function () {
-        console.log("dddddddddddd Document2 successfully written!")
+        console.log("dddddddddddd Food Name successfully written!")
       })
       .catch(function (error) {
-        console.error("eeeeeeeeeeeeeee Error2 writing document: ", error)
+        console.error("eeeeeeeeeeeeeee Error3 writing Food Name: ", error)
       })
-    console.log("---------------------")
-
-    ///////
-
-    // firebase
-    //   .firestore()
-    //   .collection("food")
-    //   .doc(foodName)
-    //   .update({
-    //     array: firebase.firestore.FieldValue.arrayUnion, //("oniion1"),
-    //   })
-    //   .then(function () {
-    //     console.log("dddddddddddd Document successfully written!")
-    //   })
-    //   .catch(function (error) {
-    //     console.error("eeeeeeeeeeeeeee Error writing document: ", error)
-    //   })
 
     console.log("end")
-
-    // {"_delegate":
-    //   {
-    //     "_location":
-    //       {"bucket": "photodocumentation-cf82e.appspot.com", "path_": "food/onion/rn_image_picker_lib_temp_128a1479-cc22-4f3f-b18f-83ff12d46064.jpg"},
-    //     "_service":
-    //       {"_appId": null, "_authProvider": [Provider], "_bucket": [Location], "_deleted": false, "_maxOperationRetryTime": 120000, "_maxUploadRetryTime": 600000, "_pool": [XhrIoPool], "_requests": [Set], "_url": undefined, "app": [FirebaseAppImpl]}
-    //   },
-    //   "storage": {
-    //     "INTERNAL":
-    //       {"delete": [Function _delete]},
-    //     "_delegate":
-    //       {"_appId": null, "_authProvider": [Provider], "_bucket": [Location], "_deleted": false, "_maxOperationRetryTime": 120000, "_maxUploadRetryTime": 600000, "_pool": [XhrIoPool], "_requests": [Set], "_url": undefined, "app": [FirebaseAppImpl]},
-    //     "app": [Object]
-    //   }
-    // }
-
-    // //Save images
-    // firebase
-    // .firestore()
-    // .collection("food")
-    // .doc(foodName)
-    // .update({
-    //   image: firebase.firestore.FieldValue.arrayUnion({
-    //     name: file.name,
-    //     url: await ref.getDownloadURL(),
-    //   }),
-    // })
-
-    //Save information about image
-    // if (!foodName) {
-    //   return
-    // }
-
-    //create a folder named to keep images
-    // const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
-
-    // firebase
-    //   .firestore()
-    //   .collection("food")
-    //   .doc(foodName.toLowerCase())
-    //   .set({
-    //     id: Userid,
-    //     Food_Name: foodName.toLowerCase(),
-    //     Alternate_Food_Name: alternateFoodName,
-    //     Ingredients: ingredients,
-    //     Nutrients: nutrients,
-    //     imageURL: image,
-    //   })
-    //   .then(function () {
-    //     console.log("dddddddddddd Document successfully written!")
-    //   })
-    //   .catch(function (error) {
-    //     console.error("eeeeeeeeeeeeeee Error writing document: ", error)
-    //   })
 
     LogBox.ignoreLogs(["Setting a timer"])
     console.log("ppppppppppppp")
