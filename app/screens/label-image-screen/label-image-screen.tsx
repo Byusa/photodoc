@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react"
-import { View, ViewStyle, TextStyle, ImageBackground, Platform } from "react-native"
+import { View, ViewStyle, TextStyle, ImageBackground } from "react-native"
 import { observer } from "mobx-react-lite"
 import { useNavigation, useNavigationState } from "@react-navigation/native"
 import { Button, Header, Text, TextField } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import Keyboardhelper from "../../components/hoc/keyboardhelper"
-//import fire, { db } from "../../../config/fire"
-import { uuid } from "uuidv4"
 import firebase from "firebase/app"
-//import * as RNFS from "react-native-fs"
 import { LogBox } from "react-native"
 import "firebase/firestore"
-import { resolveConfig } from "prettier"
-import { reject } from "ramda"
-
-import ImagePicker from "react-native-image-picker"
-import { snapshot } from "@storybook/addon-storyshots"
-//import RNFetchBlob from "react-native-fetch-blob"
-
-//const block = RNFetchBlob.polyfill.Blob
-//const fs = RNFetchBlob.fs
 
 const FULL: ViewStyle = { flex: 1, backgroundColor: "#F4F5FA" }
 

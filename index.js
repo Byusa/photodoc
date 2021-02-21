@@ -15,16 +15,27 @@ import "firebase/auth"
 import "firebase/firestore"
 import "firebase/storage"
 
+// const config = {
+//   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//   apiKey: "AIzaSyD0SWN-h4CvElFIXpdXjxxqed_kdw0ez2g",
+//   authDomain: "photodocumentation-cf82e.firebaseapp.com",
+//   databaseURL: "https://photodocumentation-cf82e-default-rtdb.firebaseio.com",
+//   projectId: "photodocumentation-cf82e",
+//   storageBucket: "photodocumentation-cf82e.appspot.com",
+//   messagingSenderId: "1035861943070",
+//   appId: "1:1035861943070:web:944c1485cb3c651885df0f",
+//   measurementId: "G-21F20F44DQ",
+// }
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const config = {
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  apiKey: "AIzaSyD0SWN-h4CvElFIXpdXjxxqed_kdw0ez2g",
-  authDomain: "photodocumentation-cf82e.firebaseapp.com",
-  databaseURL: "https://photodocumentation-cf82e-default-rtdb.firebaseio.com",
-  projectId: "photodocumentation-cf82e",
-  storageBucket: "photodocumentation-cf82e.appspot.com",
-  messagingSenderId: "1035861943070",
-  appId: "1:1035861943070:web:944c1485cb3c651885df0f",
-  measurementId: "G-21F20F44DQ",
+  apiKey: "AIzaSyBpEl7qT5odPkPBkh0vwr97J01aNKJ4M64",
+  authDomain: "diet-photo-data.firebaseapp.com",
+  projectId: "diet-photo-data",
+  storageBucket: "diet-photo-data.appspot.com",
+  messagingSenderId: "220296184872",
+  appId: "1:220296184872:web:4a91d2985ae1f57278e11d",
+  measurementId: "G-5BJYYDQRWG",
 }
 
 firebase.initializeApp(config) //Initilazing our authenticaltion
