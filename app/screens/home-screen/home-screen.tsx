@@ -172,6 +172,8 @@ export const HomeScreen = observer(function HomeScreen(imageStore) {
         alert(error.message)
       })
   }
+
+  const openDrawer = () => {}
   const requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
@@ -285,7 +287,7 @@ export const HomeScreen = observer(function HomeScreen(imageStore) {
           useVectorIcons={true}
           leftIconName={"bars"}
           rightIconName={"user"}
-          onLeftPress={undefined}
+          onLeftPress={openDrawer}
           onRightPress={signout}
           style={HEADER}
           titleStyle={HEADER_TITLE}

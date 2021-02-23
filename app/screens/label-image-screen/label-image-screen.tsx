@@ -87,6 +87,7 @@ const LabelImageScreen = observer(function LabelImageScreen() {
     const foodInfo = "food" + "/" + foodName + "/" + file.fileName
     const response = await fetch(image)
     const blob = await response.blob()
+
     var ref = firebase.storage().ref().child(foodInfo)
 
     await ref
@@ -100,7 +101,20 @@ const LabelImageScreen = observer(function LabelImageScreen() {
 
     const picturePath = ref._delegate._location.path_
 
+    var storageRef = await firebase.storage().ref(picturePath)
+    var url = await storageRef.getDownloadURL().then(
+      function (url) {
+        console.log(url)
+      },
+      function (error) {
+        console.log(error)
+      },
+    )
+
     console.log("---------------------")
+    console.log("xxxxxxxxxxxxxxxxxxx = ", url, " = xxxxxxxxxxxxxxxxxxx ")
+    console.log("---------------------")
+
     //console.log("YYYYYY", picturePath)
 
     const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
@@ -122,6 +136,7 @@ const LabelImageScreen = observer(function LabelImageScreen() {
           foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
             userId: Userid,
             picturePath: picturePath,
+            //url: url,
           }),
         },
         { merge: true },
