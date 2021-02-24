@@ -127,6 +127,11 @@ const LabelImageScreen = observer(function LabelImageScreen() {
     console.log("---------------------")
     //console.log("YYYYYY", picturePath)
     const Userid = auth().currentUser && auth().currentUser.uid
+    const userEmail = auth().currentUser && auth().currentUser.email
+    console.log("---------------------")
+    console.log("email", userEmail)
+    console.log("---------------------")
+
     //var docRef = firestore().collection("food").doc(foodName.toLowerCase())
     //Save document to firestore
     await firestore()
@@ -141,7 +146,7 @@ const LabelImageScreen = observer(function LabelImageScreen() {
           Nutrients: nutrients,
           foodImageCollection: firestore.FieldValue.arrayUnion({
             userId: Userid,
-            File_Name: file.fileName,
+            Email: userEmail,
             url: urlLink,
             created: firestore.Timestamp.now(),
           }),
