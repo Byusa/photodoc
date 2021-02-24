@@ -21,7 +21,6 @@ import { Icon as MyIcon } from "../../components/icon/icon"
 import * as ImagePicker from "react-native-image-picker"
 import { PermissionsAndroid } from "react-native"
 //import HorizontalBarGraph from "@chartiful/react-native-horizontal-bar-graph"
-import firebase from "firebase/app"
 
 //import { ImageStore, ImageStoreImpl } from "../../stateManagment/imageStore"
 
@@ -162,15 +161,15 @@ export const HomeScreen = observer(function HomeScreen(imageStore) {
   }
 
   const signout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        navigation.navigate("register")
-      })
-      .catch((error) => {
-        alert(error.message)
-      })
+    // firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(() => {
+    //     navigation.navigate("register")
+    //   })
+    //   .catch((error) => {
+    //     alert(error.message)
+    //   })
   }
 
   const openDrawer = () => {}

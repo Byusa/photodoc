@@ -5,9 +5,9 @@ import { useNavigation, useNavigationState } from "@react-navigation/native"
 import { Button, Header, Text, TextField } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import Keyboardhelper from "../../components/hoc/keyboardhelper"
-import firebase from "firebase/app"
+//import firebase from "firebase/app"
 import { LogBox } from "react-native"
-import "firebase/firestore"
+//import "firebase/firestore"
 
 const FULL: ViewStyle = { flex: 1, backgroundColor: "#F4F5FA" }
 
@@ -82,77 +82,66 @@ const LabelImageScreen = observer(function LabelImageScreen() {
   const navigation = useNavigation()
 
   const uploadImage = async () => {
-    const db = firebase.firestore()
-    //Save image to storage
-    const foodInfo = "food" + "/" + foodName + "/" + file.fileName
-    const response = await fetch(image)
-    const blob = await response.blob()
-
-    var ref = firebase.storage().ref().child(foodInfo)
-
-    await ref
-      .put(blob)
-      .then(function () {
-        console.log("dddddddddddd image successfully written!")
-      })
-      .catch(function (error) {
-        console.error("eeeeeeeeeeeeeee Error writing image: ", error)
-      })
-
-    const picturePath = ref._delegate._location.path_
-
-    var storageRef = await firebase.storage().ref(picturePath)
-    var url = await storageRef.getDownloadURL().then(
-      function (url) {
-        console.log(url)
-      },
-      function (error) {
-        console.log(error)
-      },
-    )
-
-    console.log("---------------------")
-    console.log("xxxxxxxxxxxxxxxxxxx = ", url, " = xxxxxxxxxxxxxxxxxxx ")
-    console.log("---------------------")
-
-    //console.log("YYYYYY", picturePath)
-
-    const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
-
-    var docRef = firebase.firestore().collection("food").doc(foodName.toLowerCase())
-
-    //Save document to firestore
-    await firebase
-      .firestore()
-      .collection("food")
-      .doc(foodName.toLowerCase())
-      .set(
-        {
-          id: Userid,
-          Food_Name: foodName.toLowerCase(),
-          Alternate_Food_Name: alternateFoodName,
-          Ingredients: ingredients,
-          Nutrients: nutrients,
-          foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
-            userId: Userid,
-            picturePath: picturePath,
-            //url: url,
-          }),
-        },
-        { merge: true },
-      )
-      .then(function () {
-        console.log("dddddddddddd Food Name successfully written!")
-      })
-      .catch(function (error) {
-        console.error("eeeeeeeeeeeeeee Error3 writing Food Name: ", error)
-      })
-
-    console.log("end")
-
-    LogBox.ignoreLogs(["Setting a timer"])
-    console.log("ppppppppppppp")
-    navigation.navigate("home")
+    // const db = firebase.firestore()
+    // //Save image to storage
+    // const foodInfo = "food" + "/" + foodName + "/" + file.fileName
+    // const response = await fetch(image)
+    // const blob = await response.blob()
+    // var ref = firebase.storage().ref().child(foodInfo)
+    // await ref
+    //   .put(blob)
+    //   .then(function () {
+    //     console.log("dddddddddddd image successfully written!")
+    //   })
+    //   .catch(function (error) {
+    //     console.error("eeeeeeeeeeeeeee Error writing image: ", error)
+    //   })
+    // const picturePath = ref._delegate._location.path_
+    // var storageRef = await firebase.storage().ref(picturePath)
+    // var url = await storageRef.getDownloadURL().then(
+    //   function (url) {
+    //     console.log(url)
+    //   },
+    //   function (error) {
+    //     console.log(error)
+    //   },
+    // )
+    // console.log("---------------------")
+    // console.log("xxxxxxxxxxxxxxxxxxx = ", url, " = xxxxxxxxxxxxxxxxxxx ")
+    // console.log("---------------------")
+    // //console.log("YYYYYY", picturePath)
+    // const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
+    // var docRef = firebase.firestore().collection("food").doc(foodName.toLowerCase())
+    // //Save document to firestore
+    // await firebase
+    //   .firestore()
+    //   .collection("food")
+    //   .doc(foodName.toLowerCase())
+    //   .set(
+    //     {
+    //       id: Userid,
+    //       Food_Name: foodName.toLowerCase(),
+    //       Alternate_Food_Name: alternateFoodName,
+    //       Ingredients: ingredients,
+    //       Nutrients: nutrients,
+    //       foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
+    //         userId: Userid,
+    //         picturePath: picturePath,
+    //         //url: url,
+    //       }),
+    //     },
+    //     { merge: true },
+    //   )
+    //   .then(function () {
+    //     console.log("dddddddddddd Food Name successfully written!")
+    //   })
+    //   .catch(function (error) {
+    //     console.error("eeeeeeeeeeeeeee Error3 writing Food Name: ", error)
+    //   })
+    // console.log("end")
+    // LogBox.ignoreLogs(["Setting a timer"])
+    // console.log("ppppppppppppp")
+    // navigation.navigate("home")
   }
 
   const navState = useNavigationState((state) => state.routes)

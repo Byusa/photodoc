@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1035861943070",
+    "firebase_url": "https://photodocumentation-cf82e-default-rtdb.firebaseio.com",
+    "project_id": "photodocumentation-cf82e",
+    "storage_bucket": "photodocumentation-cf82e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035861943070:android:5719124aab9cd07a85df0f",
+        "android_client_info": {
+          "package_name": "com.photodoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035861943070-cel3vb5uqa08s6jsv798ipoojuvlgdg3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.photodoc",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1035861943070-pi3t587mno3lsvlngg6objhp7cur0kit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoMo1MmoO4TmjhLt8Sf5YD4-sa_Yl_t4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035861943070-pi3t587mno3lsvlngg6objhp7cur0kit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

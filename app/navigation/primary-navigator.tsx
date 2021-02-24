@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react"
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { WelcomeScreen, DemoScreen } from "../screens"
-import firebase from "firebase/app"
+//import firebase from "firebase/app"
 import {
   Registering,
   Logining,
@@ -53,20 +53,20 @@ const appRoutes = [
 ]
 
 export function PrimaryNavigator() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(true) // change later
+  const [isLoading, setIsLoading] = useState(false) // TODO: changed later
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setIsLoggedIn(true)
-        setIsLoading(false)
-      } else {
-        setIsLoggedIn(false)
-        setIsLoading(false)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       setIsLoggedIn(true)
+  //       setIsLoading(false)
+  //     } else {
+  //       setIsLoggedIn(false)
+  //       setIsLoading(false)
+  //     }
+  //   })
+  // }, [])
 
   if (isLoading) {
     return (
