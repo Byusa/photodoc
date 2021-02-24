@@ -27,6 +27,17 @@ const config = {
   measurementId: "G-21F20F44DQ",
 }
 
+// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const config = {
+//   apiKey: "AIzaSyBpEl7qT5odPkPBkh0vwr97J01aNKJ4M64",
+//   authDomain: "diet-photo-data.firebaseapp.com",
+//   projectId: "diet-photo-data",
+//   storageBucket: "diet-photo-data.appspot.com",
+//   messagingSenderId: "220296184872",
+//   appId: "1:220296184872:web:4a91d2985ae1f57278e11d",
+//   measurementId: "G-5BJYYDQRWG",
+// }
+
 firebase.initializeApp(config) //Initilazing our authenticaltion
 
 /**

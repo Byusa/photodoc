@@ -57,6 +57,7 @@ export function Header(props: HeaderProps) {
       ) : (
         <View style={LEFT} />
       )}
+
       <View style={TITLE_MIDDLE}>
         <Text style={{ ...TITLE, ...titleStyle }} text={header} />
       </View>
