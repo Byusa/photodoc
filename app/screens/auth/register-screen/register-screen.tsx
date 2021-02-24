@@ -11,7 +11,8 @@ import Icon from "react-native-vector-icons/FontAwesome5"
 //import fire from "../../../../config/fire"
 import { Icon as InsideIcon } from "../../../components/icon/icon"
 
-import firebase from "firebase/app"
+//import firebase from "firebase/app"
+import auth from "@react-native-firebase/auth"
 
 const FULL: ViewStyle = { flex: 1 }
 
@@ -63,8 +64,7 @@ const RegisterScreen = observer(function RegisterScreen() {
   }
 
   const registerPress = () => {
-    firebase
-      .auth()
+    auth()
       .createUserWithEmailAndPassword(email, password)
       .then((u) => {
         // ls.set("token", user.user.uid)
@@ -78,28 +78,27 @@ const RegisterScreen = observer(function RegisterScreen() {
 
   const loginwithfacebook = () => {
     // navigation.navigate("demo")
-    const fbProvider = new firebase.auth.FacebookAuthProvider()
-
-    firebase
-      .auth()
-      .signInWithPopup(fbProvider)
-      .then(function (result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        let token = result.credential.accessToken
-        // The signed-in user info.
-        let user = result.user
-        // ...
-      })
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code
-        var errorMessage = error.message
-        // The email of the user's account used.
-        var email = error.email
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential
-        // ...
-      })
+    // const fbProvider = new firebase.auth.FacebookAuthProvider()
+    // firebase
+    //   .auth()
+    //   .signInWithPopup(fbProvider)
+    //   .then(function (result) {
+    //     // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //     let token = result.credential.accessToken
+    //     // The signed-in user info.
+    //     let user = result.user
+    //     // ...
+    //   })
+    //   .catch(function (error) {
+    //     // Handle Errors here.
+    //     var errorCode = error.code
+    //     var errorMessage = error.message
+    //     // The email of the user's account used.
+    //     var email = error.email
+    //     // The firebase.auth.AuthCredential type that was used.
+    //     var credential = error.credential
+    //     // ...
+    //   })
   }
 
   const loginwithgoogle = () => {

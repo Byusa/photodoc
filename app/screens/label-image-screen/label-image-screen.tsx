@@ -5,9 +5,10 @@ import { useNavigation, useNavigationState } from "@react-navigation/native"
 import { Button, Header, Text, TextField } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import Keyboardhelper from "../../components/hoc/keyboardhelper"
-import firebase from "firebase/app"
 import { LogBox } from "react-native"
-import "firebase/firestore"
+import firestore from "@react-native-firebase/firestore"
+import storage from "@react-native-firebase/storage"
+import auth from "@react-native-firebase/auth"
 
 const FULL: ViewStyle = { flex: 1, backgroundColor: "#F4F5FA" }
 
@@ -82,14 +83,12 @@ const LabelImageScreen = observer(function LabelImageScreen() {
   const navigation = useNavigation()
 
   const uploadImage = async () => {
-    const db = firebase.firestore()
+    const db = firestore()
     //Save image to storage
     const foodInfo = "food" + "/" + foodName + "/" + file.fileName
     const response = await fetch(image)
     const blob = await response.blob()
-
-    var ref = firebase.storage().ref().child(foodInfo)
-
+    var ref = storage().ref().child(foodInfo)
     await ref
       .put(blob)
       .then(function () {
@@ -98,32 +97,39 @@ const LabelImageScreen = observer(function LabelImageScreen() {
       .catch(function (error) {
         console.error("eeeeeeeeeeeeeee Error writing image: ", error)
       })
+    //const picturePath = ref._delegate._location.path_
+    //const storageRef = await storage().ref(picturePath)
 
-    const picturePath = ref._delegate._location.path_
-
-    var storageRef = await firebase.storage().ref(picturePath)
-    var url = await storageRef.getDownloadURL().then(
+    console.log("---------------------")
+    let urlLink = "Not Available"
+    const imageUrl = await ref.getDownloadURL().then(
       function (url) {
-        console.log(url)
+        urlLink = url
+        console.log("image URL successful downloaded", url)
       },
       function (error) {
-        console.log(error)
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", error)
       },
     )
-
+    // const url = await storage()
+    //   .ref(image)
+    //   .getDownloadURL()
+    //   .then(
+    //     function (url) {
+    //       console.log("image URL successful downloaded", url)
+    //     },
+    //     function (error) {
+    //       console.log(error)
+    //     },
+    //   )
     console.log("---------------------")
-    console.log("xxxxxxxxxxxxxxxxxxx = ", url, " = xxxxxxxxxxxxxxxxxxx ")
+    //console.log("xxxxxxxxxxxxxxxxxxx = ", url, " = xxxxxxxxxxxxxxxxxxx ")
     console.log("---------------------")
-
     //console.log("YYYYYY", picturePath)
-
-    const Userid = firebase.auth().currentUser && firebase.auth().currentUser.uid
-
-    var docRef = firebase.firestore().collection("food").doc(foodName.toLowerCase())
-
+    const Userid = auth().currentUser && auth().currentUser.uid
+    //var docRef = firestore().collection("food").doc(foodName.toLowerCase())
     //Save document to firestore
-    await firebase
-      .firestore()
+    await firestore()
       .collection("food")
       .doc(foodName.toLowerCase())
       .set(
@@ -133,10 +139,11 @@ const LabelImageScreen = observer(function LabelImageScreen() {
           Alternate_Food_Name: alternateFoodName,
           Ingredients: ingredients,
           Nutrients: nutrients,
-          foodImageCollection: firebase.firestore.FieldValue.arrayUnion({
+          foodImageCollection: firestore.FieldValue.arrayUnion({
             userId: Userid,
-            picturePath: picturePath,
-            //url: url,
+            File_Name: file.fileName,
+            url: urlLink,
+            created: firestore.Timestamp.now(),
           }),
         },
         { merge: true },
@@ -147,9 +154,7 @@ const LabelImageScreen = observer(function LabelImageScreen() {
       .catch(function (error) {
         console.error("eeeeeeeeeeeeeee Error3 writing Food Name: ", error)
       })
-
     console.log("end")
-
     LogBox.ignoreLogs(["Setting a timer"])
     console.log("ppppppppppppp")
     navigation.navigate("home")

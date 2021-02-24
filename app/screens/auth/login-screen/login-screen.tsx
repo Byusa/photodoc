@@ -8,9 +8,10 @@ import { Button, Screen, Wallpaper, Text, TextField } from "../../../components"
 import { color, spacing, typography } from "../../../theme"
 import Keyboardhelper from "../../../components/hoc/keyboardhelper"
 import Icon from "react-native-vector-icons/FontAwesome5"
-//import fire from "../../../../config/fire"
-import firebase from "firebase/app"
+//import fire from "../../../../config/fire"//
+//import firebase from "firebase/app"
 import { Icon as InsideIcon } from "../../../components/icon/icon"
+import auth from "@react-native-firebase/auth"
 
 // import { Icon as FontAwesome } from "../../../components/icon/icon"
 
@@ -64,8 +65,7 @@ const LoginScreen = observer(function LoginScreen() {
   const navigation = useNavigation()
 
   const loginPress = () => {
-    firebase
-      .auth()
+    auth()
       .signInWithEmailAndPassword(email, password)
       .then((u) => {
         setUser(u)
@@ -76,23 +76,20 @@ const LoginScreen = observer(function LoginScreen() {
         alert(error.message)
       })
   }
-  var provider = new firebase.auth.FacebookAuthProvider()
+  //var provider = new firebase.auth.FacebookAuthProvider()
   const loginwithfacebook = () => {
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-
-      .then(function (result) {
-        var token = result.credential.accessToken
-        var user = result.user
-
-        console.log(token)
-        console.log(user)
-      })
-      .catch(function (error) {
-        console.log(error.code)
-        console.log(error.message)
-      })
+    // auth()
+    // .signInWithPopup(provider)
+    // .then(function (result) {
+    //   var token = result.credential.accessToken
+    //   var user = result.user
+    //   console.log(token)
+    //   console.log(user)
+    // })
+    // .catch(function (error) {
+    //   console.log(error.code)
+    //   console.log(error.message)
+    // })
   }
   const loginwithgoogle = () => {
     // navigation.navigate("demo")

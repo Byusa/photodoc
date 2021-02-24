@@ -15,8 +15,8 @@ import React, { useState, useEffect, useRef } from "react"
 import { NavigationContainerRef } from "@react-navigation/native"
 import { SafeAreaProvider, initialWindowSafeAreaInsets } from "react-native-safe-area-context"
 import * as storage from "./utils/storage"
-
 import { LogBox } from "react-native"
+import firestore from "@react-native-firebase/firestore"
 
 import {
   useBackButtonHandler,
