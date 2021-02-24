@@ -58,13 +58,6 @@ function App() {
   LogBox.ignoreAllLogs()
   LogBox.ignoreLogs(["Require cycle"])
 
-  useEffect(() => {
-    console.log("inside")
-    firestore().collection("test").doc("23drfgeasdfgcvh").set({
-      hi: "yooo",
-    })
-  })
-
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color. You can replace

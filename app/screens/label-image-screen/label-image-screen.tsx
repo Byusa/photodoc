@@ -101,23 +101,33 @@ const LabelImageScreen = observer(function LabelImageScreen() {
     //const storageRef = await storage().ref(picturePath)
 
     console.log("---------------------")
-    const url = await storage()
-      .ref(image)
-      .getDownloadURL()
-      .then(
-        function (url) {
-          console.log("image URL successful downloaded", url)
-        },
-        function (error) {
-          console.log(error)
-        },
-      )
+    let urlLink = "Not Available"
+    const imageUrl = await ref.getDownloadURL().then(
+      function (url) {
+        urlLink = url
+        console.log("image URL successful downloaded", url)
+      },
+      function (error) {
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", error)
+      },
+    )
+    // const url = await storage()
+    //   .ref(image)
+    //   .getDownloadURL()
+    //   .then(
+    //     function (url) {
+    //       console.log("image URL successful downloaded", url)
+    //     },
+    //     function (error) {
+    //       console.log(error)
+    //     },
+    //   )
     console.log("---------------------")
     //console.log("xxxxxxxxxxxxxxxxxxx = ", url, " = xxxxxxxxxxxxxxxxxxx ")
     console.log("---------------------")
     //console.log("YYYYYY", picturePath)
     const Userid = auth().currentUser && auth().currentUser.uid
-    var docRef = firestore().collection("food").doc(foodName.toLowerCase())
+    //var docRef = firestore().collection("food").doc(foodName.toLowerCase())
     //Save document to firestore
     await firestore()
       .collection("food")
@@ -131,8 +141,9 @@ const LabelImageScreen = observer(function LabelImageScreen() {
           Nutrients: nutrients,
           foodImageCollection: firestore.FieldValue.arrayUnion({
             userId: Userid,
-            //picturePath: picturePath,
-            url: url,
+            File_Name: file.fileName,
+            url: urlLink,
+            created: firestore.Timestamp.now(),
           }),
         },
         { merge: true },
