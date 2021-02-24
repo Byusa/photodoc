@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/FontAwesome5"
 //import fire from "../../../../config/fire"//
 //import firebase from "firebase/app"
 import { Icon as InsideIcon } from "../../../components/icon/icon"
+import auth from "@react-native-firebase/auth"
 
 // import { Icon as FontAwesome } from "../../../components/icon/icon"
 
@@ -64,33 +65,31 @@ const LoginScreen = observer(function LoginScreen() {
   const navigation = useNavigation()
 
   const loginPress = () => {
-    // firebase
-    //   .auth()
-    //   .signInWithEmailAndPassword(email, password)
-    //   .then((u) => {
-    //     setUser(u)
-    //     // ls.set("token", u.user.uid) // Any time the  user logs in persist to local storage
-    //     navigation.navigate("home")
-    //   })
-    //   .catch((error) => {
-    //     alert(error.message)
-    //   })
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((u) => {
+        setUser(u)
+        // ls.set("token", u.user.uid) // Any time the  user logs in persist to local storage
+        navigation.navigate("home")
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
   }
   //var provider = new firebase.auth.FacebookAuthProvider()
   const loginwithfacebook = () => {
-    // firebase
-    //   .auth()
-    //   .signInWithPopup(provider)
-    //   .then(function (result) {
-    //     var token = result.credential.accessToken
-    //     var user = result.user
-    //     console.log(token)
-    //     console.log(user)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error.code)
-    //     console.log(error.message)
-    //   })
+    // auth()
+    // .signInWithPopup(provider)
+    // .then(function (result) {
+    //   var token = result.credential.accessToken
+    //   var user = result.user
+    //   console.log(token)
+    //   console.log(user)
+    // })
+    // .catch(function (error) {
+    //   console.log(error.code)
+    //   console.log(error.message)
+    // })
   }
   const loginwithgoogle = () => {
     // navigation.navigate("demo")

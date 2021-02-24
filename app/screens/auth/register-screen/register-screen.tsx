@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome5"
 import { Icon as InsideIcon } from "../../../components/icon/icon"
 
 //import firebase from "firebase/app"
+import auth from "@react-native-firebase/auth"
 
 const FULL: ViewStyle = { flex: 1 }
 
@@ -63,8 +64,7 @@ const RegisterScreen = observer(function RegisterScreen() {
   }
 
   const registerPress = () => {
-    firebase
-      .auth()
+    auth()
       .createUserWithEmailAndPassword(email, password)
       .then((u) => {
         // ls.set("token", user.user.uid)
