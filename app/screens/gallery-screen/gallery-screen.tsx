@@ -50,7 +50,28 @@ const ICONSTYLE: ViewStyle = {
 }
 
 export const GalleryScreen = observer(function GalleryScreen(gallery) {
+
   const navigation = useNavigation()
+
+  const [albums, setAlbums] = useState([])
+
+  useEffect(() => {
+    //Our use effect now is triggered only once we change anything 
+    //cause we added [] (without [], it would be triggered in every component update)
+    const unmount = db.collection('food').onSnapshot((snapshot) => {
+      const tempAlbums = []
+      snapshot.forEach(doc => {
+        //distructuring
+        tempAlbums.push({
+          ...doc.data(),
+          id: doc.id
+        });
+      })
+      setAlbums(tempAlbums)
+      tempAlbums.map((temp) => { console.log(temp) })
+    })
+    return unmount
+  }, [])
 
   const back = () => {
     navigation.navigate("home")
@@ -70,7 +91,20 @@ export const GalleryScreen = observer(function GalleryScreen(gallery) {
       </View>
 
       <View style={{ flex: 0.85 }}>
-        <FlatList
+
+      {albums.map((album) => (
+            <div>
+                {/* <Link to={`/${album.id}`}> */}
+                    <aside key={album.Food_Name} >
+                        <img src={album.foodImageCollection ? album.foodImageCollection[0].url : ""} alt="album" />
+                        <h3> {album.Food_Name} </h3>
+                    </aside>
+                {/* </Link> */}
+
+            </div>
+          ))
+      }
+        {/* <FlatList
           data={[0, 1, 2, 3, 4, 5]}
           vertical
           renderItem={({ item }) => {
@@ -102,7 +136,7 @@ export const GalleryScreen = observer(function GalleryScreen(gallery) {
               </View>
             )
           }}
-        />
+        /> */}
       </View>
     </Screen>
   )
